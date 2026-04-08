@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoneroSwap - Anonymous Cryptocurrency Exchange</title>
-    <meta name="description" content="MoneroSwap.cloud - Anonymous exchange, no KYC, privacy by default. The safe way to move your assets.">
+        <title>MoneroSwap — Anonymous Crypto Exchange | No KYC</title>
+    <meta name="description" content="Swap Bitcoin, Ethereum and more to Monero instantly. No KYC, no logs, no tracking. Privacy by default.">
+    <meta property="og:title" content="MoneroSwap — Anonymous Crypto Exchange | No KYC">
+    <meta property="og:description" content="Swap Bitcoin, Ethereum and more to Monero instantly. No KYC, no logs, no tracking. Privacy by default.">
+    <meta property="og:url" content="https://moneroswap.cloud/">
+    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -593,6 +597,64 @@
             }
         }
 
+        
+        .tracking-widget {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: none;
+            text-align: center;
+        }
+        .tracking-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .tracking-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--glass-border);
+            text-align: left;
+        }
+        .tracking-row:last-child {
+            border-bottom: none;
+        }
+        .tracking-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            min-width: 120px;
+        }
+        .tracking-value {
+            font-weight: 500;
+            font-size: 0.9375rem;
+            flex: 1;
+            text-align: right;
+            word-break: break-all;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-waiting, .status-new { background: rgba(160, 160, 160, 0.2); color: #a0a0a0; }
+        .status-confirming, .status-exchanging { background: rgba(255, 170, 0, 0.2); color: #ffaa00; }
+        .status-finished { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+        .status-failed, .status-refunded { background: rgba(255, 68, 68, 0.2); color: #ff4444; }
+        
+        .warn-text { color: orange; font-size: 0.75rem; margin-top: 0.5rem; display: none;}
         /* Modal Styles */
         .modal-overlay {
             position: fixed;
@@ -709,7 +771,10 @@
             <div class="swap-widget">
                 <div class="swap-header">
                     <span class="swap-title">Swap</span>
-                    <span class="swap-rate" id="swap-rate">Loading rates...</span>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                        <span class="swap-rate" id="swap-rate">Loading rates...</span>
+                        <button id="retry-rate-btn" style="display: none; background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 0.2rem 0.5rem; border-radius: 0.5rem; cursor: pointer; font-size: 0.75rem; margin-top: 0.25rem;">Retry</button>
+                    </div>
                 </div>
 
                 <div class="input-group">
@@ -733,6 +798,7 @@
                             <option value="BNB">BNB (BNB)</option>
                         </select>
                     </div>
+                    <div id="min-amount-warning" class="warn-text">Min amount: <span id="min-amount-value">...</span></div>
                     <div class="amount-input-wrapper" style="margin-top: 0.5rem;">
                         <span class="currency-symbol" id="from-symbol">BTC</span>
                         <input type="number" class="amount-input" id="from-amount" placeholder="0.00" step="any" min="0">
@@ -777,6 +843,7 @@
                 <div class="input-group">
                     <label class="input-label" id="receive-label">Receive Address</label>
                     <input type="text" class="address-input" id="receive-address" placeholder="Enter your wallet address">
+                    <div id="address-error" style="color: var(--error); font-size: 0.75rem; margin-top: 0.5rem; display: none;">Invalid address format.</div>
                 </div>
 
                 <div class="exchange-info">
@@ -798,6 +865,28 @@
 
                 <div class="result-message" id="result-message"></div>
             </div>
+            <div class="tracking-widget" id="tracking-widget">
+                <h2 class="tracking-title">Transaction Tracking</h2>
+                <div class="tracking-row">
+                    <span class="tracking-label">Transaction ID:</span>
+                    <span class="tracking-value" id="track-id" style="font-family: monospace;">...</span>
+                </div>
+                <div class="tracking-row">
+                    <span class="tracking-label">Send Exactly:</span>
+                    <span class="tracking-value" id="track-amount">...</span>
+                </div>
+                <div class="tracking-row">
+                    <span class="tracking-label">Deposit Address:</span>
+                    <span class="tracking-value"><a href="#" id="track-address-copy" style="color: var(--primary); text-decoration: none; font-family: monospace;">...</a></span>
+                </div>
+                <div class="tracking-row">
+                    <span class="tracking-label">Status:</span>
+                    <span class="tracking-value"><span id="track-status" class="status-badge status-waiting">WAITING</span></span>
+                </div>
+                <button class="submit-btn" id="new-swap-btn" style="margin-top: 2rem;">New Swap</button>
+            </div>
+            
+            
         </section>
 
 
@@ -816,8 +905,8 @@
             <div class="footer-content">
                 <div class="footer-logo">MoneroSwap.cloud</div>
                 <div class="footer-links">
-                    <a href="javascript:void(0)" id="tos-link">Terms of Service</a>
-                    <a href="javascript:void(0)" id="privacy-link">Privacy Policy</a>
+                    <a href="#terms" id="tos-link">Terms of Service</a>
+                    <a href="#privacy" id="privacy-link">Privacy Policy</a>
                     <a href="https://changenow.io/terms-of-use" target="_blank" rel="noopener">ChangeNOW Support</a>
                 </div>
                 <p class="footer-disclaimer">Powered by ChangeNOW.io liquidity infrastructure. We don't collect personal data. Privacy by default.</p>
@@ -880,21 +969,12 @@
         </div>
     </div>
 
-    <script>
+        <script>
         // Configuration
         const CONFIG = {
             apiKey: '353e12df6ccc210ab17c8cc917aad2aa47b84cd76e764c8dd27944dfb150f60d',
             refCode: 'acd06ccaddab66',
-            changenowBaseUrl: 'https://api.changenow.io/v1',
-            coingeckoBaseUrl: 'https://api.coingecko.com/api/v3'
-        };
-
-        const currencyToCoingecko = {
-            'BTC': 'bitcoin', 'ETH': 'ethereum', 'XMR': 'monero',
-            'USDT': 'tether', 'LTC': 'litecoin', 'XRP': 'ripple',
-            'ADA': 'cardano', 'SOL': 'solana', 'DOGE': 'dogecoin',
-            'DOT': 'polkadot', 'MATIC': 'matic-network', 'AVAX': 'avalanche-2',
-            'LINK': 'chainlink', 'UNI': 'uniswap', 'BNB': 'binancecoin'
+            changenowBaseUrl: '/api/changenow',
         };
 
         const currencyValidation = {
@@ -902,7 +982,7 @@
             'ETH':  { regex: /^0x[a-fA-F0-9]{40}$/, placeholder: '0x...' },
             'XMR':  { regex: /^4[0-9AB][a-km-zA-HJ-NP-Z]{93}$|^8[a-km-zA-HJ-NP-Z]{95}$/, placeholder: '4... (95 characters)' },
             'USDT': { regex: /^0x[a-fA-F0-9]{40}$|^T[a-zA-Z0-9]{33}$/, placeholder: '0x... or T...' },
-            'LTC':  { regex: /^[LM3][a-km-zA-HJ-NP-Z]{26,33}$/, placeholder: 'L... or M... or 3...' },
+            'LTC':  { regex: /^[LM3][a-km-zA-HJ-NP-Z]{26,33}$|^ltc1[a-z0-9]{39,59}$/i, placeholder: 'L... or M... or ltc1...' },
             'XRP':  { regex: /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/, placeholder: 'r...' },
             'ADA':  { regex: /^addr1[a-z0-9]{58}$/, placeholder: 'addr1...' },
             'SOL':  { regex: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/, placeholder: 'Solana address...' },
@@ -916,6 +996,9 @@
         };
 
         // DOM Elements
+        const swapWidget     = document.querySelector('.swap-widget');
+        const trackingWidget = document.getElementById('tracking-widget');
+        
         const fromCurrency   = document.getElementById('from-currency');
         const toCurrency     = document.getElementById('to-currency');
         const fromAmount     = document.getElementById('from-amount');
@@ -924,17 +1007,21 @@
         const submitBtn      = document.getElementById('submit-btn');
         const swapDirection  = document.getElementById('swap-direction');
         const swapRate       = document.getElementById('swap-rate');
+        const retryRateBtn   = document.getElementById('retry-rate-btn');
         const exchangeRate   = document.getElementById('exchange-rate');
         const networkFee     = document.getElementById('network-fee');
         const estimatedTime  = document.getElementById('estimated-time');
         const copyOnionBtn   = document.getElementById('copy-onion-btn');
         const resultMessage  = document.getElementById('result-message');
+        
+        const addressError     = document.getElementById('address-error');
+        const minAmountWarning = document.getElementById('min-amount-warning');
+        const minAmountValue   = document.getElementById('min-amount-value');
 
         // State
-        let cachedRates     = {};
-        let estimatedAmount = 0;
-        let lastValidFrom   = null;
-        let lastValidTo     = null;
+        let currentMinAmount= 0;
+        let fetchAbortController = null;
+        let trackingInterval = null;
 
         function updateSymbols() {
             document.getElementById('from-symbol').textContent = fromCurrency.value;
@@ -947,12 +1034,77 @@
             label.textContent = 'Receive Address (' + to + ')';
             const validation  = currencyValidation[to];
             receiveAddress.placeholder = validation ? validation.placeholder : 'Enter your wallet address';
+            validateAddress(); 
+        }
+
+        function validateAddress() {
+            const addr = receiveAddress.value.trim();
+            const to = toCurrency.value;
+            addressError.style.display = 'none';
+            if (!addr) return true;
+            
+            if (currencyValidation[to]) {
+                if (!currencyValidation[to].regex.test(addr)) {
+                    addressError.textContent = `Invalid ${to} address format.`;
+                    addressError.style.display = 'block';
+                    return false;
+                }
+            } else if (addr.length < 20) {
+                addressError.textContent = `Address too short.`;
+                addressError.style.display = 'block';
+                return false;
+            }
+            return true;
+        }
+
+        receiveAddress.addEventListener('input', validateAddress);
+
+        function validateAmount() {
+            const val = parseFloat(fromAmount.value);
+            if (val && val < currentMinAmount) {
+                minAmountWarning.style.color = 'var(--error)';
+                submitBtn.disabled = true;
+            } else {
+                minAmountWarning.style.color = 'orange';
+                submitBtn.disabled = false;
+            }
+        }
+
+        fromAmount.addEventListener('input', validateAmount);
+
+        async function fetchMinAmount() {
+            const from = fromCurrency.value.toLowerCase();
+            const to = toCurrency.value.toLowerCase();
+            minAmountWarning.style.display = 'none';
+            try {
+                const endpoint = `https://api.changenow.io/v1/min-amount/${from}_${to}?api_key=${CONFIG.apiKey}`;
+                const url = CONFIG.changenowBaseUrl + '?url=' + encodeURIComponent(endpoint);
+                const res = await fetch(url);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.minAmount) {
+                        currentMinAmount = data.minAmount;
+                        minAmountValue.textContent = currentMinAmount + ' ' + fromCurrency.value;
+                        minAmountWarning.style.display = 'block';
+                        // check length to avoid auto-filling when user is typing
+                        if (!fromAmount.value || parseFloat(fromAmount.value) === 0) {
+                            fromAmount.value = currentMinAmount;
+                        }
+                        validateAmount();
+                    }
+                }
+            } catch (e) {
+                console.error("Failed to fetch min amount", e);
+            }
         }
 
         async function fetchExchangeRate() {
+            if (fetchAbortController) fetchAbortController.abort();
+            fetchAbortController = new AbortController();
+            
             const from   = fromCurrency.value;
             const to     = toCurrency.value;
-            const amount = parseFloat(fromAmount.value) || 1;
+            const amount = parseFloat(fromAmount.value) || Math.max(1, currentMinAmount);
 
             if (from === to) {
                 toAmount.value = amount;
@@ -960,159 +1112,166 @@
                 return;
             }
 
-            const fromId   = currencyToCoingecko[from];
-            const toId     = currencyToCoingecko[to];
-            const cacheKey = from + '_' + to;
-
-            if (!fromId || !toId) {
-                exchangeRate.textContent = 'Currency not supported';
-                return;
-            }
-
-            if (cachedRates[cacheKey]) {
-                const rate      = cachedRates[cacheKey];
-                estimatedAmount = amount * rate;
-                toAmount.value  = estimatedAmount.toFixed(8);
-                exchangeRate.textContent  = '1 ' + from + ' ≈ ' + rate.toFixed(8) + ' ' + to;
-                networkFee.textContent    = '~1%';
-                estimatedTime.textContent = '~15-30 min';
-                swapRate.textContent      = '1 ' + from + ' ≈ ' + rate.toFixed(6) + ' ' + to;
-                return;
-            }
+            swapRate.textContent = 'Loading rates...';
+            swapRate.style.color = 'var(--text-muted)';
+            retryRateBtn.style.display = 'none';
 
             try {
-                const url      = CONFIG.coingeckoBaseUrl + '/simple/price?ids=' + fromId + ',' + toId + '&vs_currencies=usd';
-                const response = await fetch(url);
+                const timeout = setTimeout(() => fetchAbortController.abort(), 8000);
+                
+                // Get exact expected info from ChangeNOW including estimatedTime
+                const exactEndpoint = `https://api.changenow.io/v1/exchange-amount/${parseFloat(amount)}/${from.toLowerCase()}_${to.toLowerCase()}/?api_key=${CONFIG.apiKey}`;
+                const url = CONFIG.changenowBaseUrl + '?url=' + encodeURIComponent(exactEndpoint);
+                
+                const response = await fetch(url, { signal: fetchAbortController.signal });
+                clearTimeout(timeout);
+                
                 if (!response.ok) throw new Error('HTTP ' + response.status);
-                const data      = await response.json();
-                const fromPrice = data[fromId] && data[fromId].usd;
-                const toPrice   = data[toId] && data[toId].usd;
-                if (!fromPrice || !toPrice) throw new Error('Price data missing');
-
-                // Correct: 1 FROM = (fromPrice / toPrice) TO
-                const rate = fromPrice / toPrice;
-
-                cachedRates[cacheKey] = rate;
-                estimatedAmount       = amount * rate;
-
-                toAmount.value            = estimatedAmount.toFixed(8);
-                exchangeRate.textContent  = '1 ' + from + ' ≈ ' + rate.toFixed(8) + ' ' + to;
-                networkFee.textContent    = '~1%';
-                estimatedTime.textContent = '~15-30 min';
-                swapRate.textContent      = '1 ' + from + ' ≈ ' + rate.toFixed(6) + ' ' + to;
-                lastValidFrom = from;
-                lastValidTo   = to;
+                const data = await response.json();
+                
+                if (data.estimatedAmount) {
+                    toAmount.value = data.estimatedAmount.toFixed(8);
+                    const rate = data.estimatedAmount / amount;
+                    exchangeRate.textContent  = '1 ' + from + ' ≈ ' + rate.toFixed(8) + ' ' + to;
+                    swapRate.textContent      = '1 ' + from + ' ≈ ' + rate.toFixed(6) + ' ' + to;
+                    networkFee.textContent    = data.networkFee ? `~${data.networkFee} ${to}` : 'Included';
+                    
+                    if (data.transactionSpeed) {
+                        estimatedTime.textContent = `~${data.transactionSpeed} min`;
+                    } else {
+                        estimatedTime.textContent = '~15-30 min';
+                    }
+                } else {
+                    throw new Error('No rate found');
+                }
             } catch (error) {
                 console.error('Error fetching rate:', error);
-                exchangeRate.textContent = 'Error loading rate';
+                if (error.name === 'AbortError' || error.message.includes('fetch')) {
+                    swapRate.textContent = 'No se pudo obtener la tasa. Verifica tu conexión o intenta de nuevo.';
+                    swapRate.style.color = 'var(--error)';
+                    retryRateBtn.style.display = 'inline-block';
+                } else {
+                    exchangeRate.textContent = 'Error loading rate';
+                    swapRate.textContent     = 'Rate unavailable';
+                }
                 networkFee.textContent   = '---';
-                swapRate.textContent     = 'Rate unavailable';
+                estimatedTime.textContent= '---';
+                toAmount.value = '';
             }
         }
 
-        async function getExactRate(from, to, amount) {
-            try {
-                const endpoint = CONFIG.changenowBaseUrl + '/exchange-amount/' + from.toLowerCase() + '_' + to.toLowerCase() + '/?amount=' + amount + '&type=direct';
-                const url      = 'https://corsproxy.io/?' + encodeURIComponent(endpoint);
-                const response = await fetch(url);
-                if (response.ok) {
-                    const data   = await response.json();
-                    const result = parseFloat(data.estimatedAmount || data.result);
-                    if (result && parseFloat(amount) > 0) {
-                        return { rate: result / parseFloat(amount), valid: true };
-                    }
-                }
-            } catch (e) {
-                console.warn('getExactRate failed:', e);
-            }
-            return { rate: null, valid: false };
-        }
+        retryRateBtn.addEventListener('click', fetchExchangeRate);
 
         async function createTransaction() {
-            const from    = fromCurrency.value;
-            const to      = toCurrency.value;
+            const from    = fromCurrency.value.toLowerCase();
+            const to      = toCurrency.value.toLowerCase();
             const amount  = fromAmount.value;
             const address = receiveAddress.value.trim();
 
-            if (!amount || parseFloat(amount) <= 0) {
-                showResult('Please enter a valid amount.', 'error');
+            if (!amount || parseFloat(amount) < currentMinAmount) {
+                showResult('Please enter an amount greater than the minimum.', 'error');
                 return;
             }
-            if (!address) {
-                showResult('Please enter your ' + to + ' wallet address.', 'error');
-                return;
-            }
-            if (currencyValidation[to] && !currencyValidation[to].regex.test(address)) {
-                showResult('Please enter a valid ' + to + ' address.', 'error');
+            if (!address || !validateAddress()) {
+                showResult('Please enter a valid ' + toCurrency.value + ' address.', 'error');
                 return;
             }
 
             submitBtn.disabled    = true;
-            submitBtn.textContent = 'Getting exact rate...';
-
-            const exactRateData = await getExactRate(from, to, amount);
-            const cacheKey      = from + '_' + to;
-            const displayRate   = exactRateData.valid
-                ? exactRateData.rate
-                : (cachedRates[cacheKey] || (estimatedAmount / parseFloat(amount)));
-            const finalAmount   = (parseFloat(amount) * displayRate).toFixed(8);
-
-            submitBtn.textContent = 'Confirm Swap';
-
-            const confirmSwap = confirm(
-                'Swap ' + amount + ' ' + from + ' for approximately ' + finalAmount + ' ' + to + '?\n\nNote: The exact amount will be confirmed by ChangeNOW at processing time.'
-            );
-
-            if (!confirmSwap) {
-                submitBtn.disabled    = false;
-                submitBtn.textContent = 'Swap Now';
-                return;
-            }
-
             submitBtn.textContent = 'Processing...';
 
             try {
-                const endpoint = CONFIG.changenowBaseUrl + '/create-transaction';
-                const url      = 'https://corsproxy.io/?' + encodeURIComponent(endpoint);
+                const endpoint = 'https://api.changenow.io/v1/transactions/' + CONFIG.apiKey;
+                const url = CONFIG.changenowBaseUrl + '?url=' + encodeURIComponent(endpoint);
+                
                 const body = {
-                    fromCurrency: from.toLowerCase(),
-                    toCurrency:   to.toLowerCase(),
-                    fromNetwork:  from.toLowerCase(),
-                    toNetwork:    to.toLowerCase(),
-                    fromAmount:   parseFloat(amount),
-                    address:      address,
-                    flow:         'standard',
-                    type:         'direct',
-                    apiKey:       CONFIG.apiKey,
-                    refCode:      CONFIG.refCode
+                    from: from,
+                    to:   to,
+                    amount: parseFloat(amount),
+                    address: address,
+                    extraId: '',
+                    userId: ''
                 };
+                
                 const response = await fetch(url, {
                     method:  'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body:    JSON.stringify(body)
                 });
+                
                 if (!response.ok) {
-                    const errorData = await response.json().catch(function() { return {}; });
-                    throw new Error(errorData.message || 'HTTP ' + response.status);
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || errorData.error || 'HTTP ' + response.status);
                 }
                 const data = await response.json();
                 if (data.error) throw new Error(data.error);
-                const depositAddress = data.payinAddress;
-                showResult(
-                    '<strong>Transaction created!</strong><br>' +
-                    'Send exactly <strong>' + data.fromAmount + ' ' + from + '</strong> to:<br>' +
-                    '<a href="#" onclick="navigator.clipboard.writeText(\'' + depositAddress + '\'); this.textContent=\'Copied!\'; return false;">' + depositAddress + '</a><br>' +
-                    '<small>Transaction ID: ' + data.id + '</small>',
-                    'success'
-                );
+                
+                startTracking(data);
+
             } catch (error) {
                 console.error('Error creating transaction:', error);
                 showResult('Error: ' + (error.message || 'Please try again later'), 'error');
-            } finally {
                 submitBtn.disabled    = false;
                 submitBtn.textContent = 'Swap Now';
             }
         }
+        
+        function startTracking(data) {
+            swapWidget.style.display = 'none';
+            trackingWidget.style.display = 'block';
+            resultMessage.style.display = 'none';
+            
+            document.getElementById('track-id').textContent = data.id;
+            document.getElementById('track-amount').textContent = `${data.expectedSendAmount || data.amount} ${fromCurrency.value}`;
+            
+            const copyLink = document.getElementById('track-address-copy');
+            copyLink.textContent = data.payinAddress;
+            copyLink.onclick = (e) => {
+                e.preventDefault();
+                navigator.clipboard.writeText(data.payinAddress);
+                copyLink.textContent = 'Copied!';
+                setTimeout(() => copyLink.textContent = data.payinAddress, 2000);
+            };
+            
+            updateTrackingStatus(data.id);
+            if (trackingInterval) clearInterval(trackingInterval);
+            trackingInterval = setInterval(() => updateTrackingStatus(data.id), 15000);
+        }
+        
+        async function updateTrackingStatus(id) {
+            try {
+                const endpoint = `https://api.changenow.io/v1/transactions/${id}/${CONFIG.apiKey}`;
+                const url = CONFIG.changenowBaseUrl + '?url=' + encodeURIComponent(endpoint);
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    const statusSpan = document.getElementById('track-status');
+                    const status = data.status || 'waiting';
+                    
+                    statusSpan.textContent = status.toUpperCase();
+                    statusSpan.className = 'status-badge status-' + status.toLowerCase();
+                    
+                    if (status === 'finished' || status === 'failed' || status === 'refunded') {
+                        clearInterval(trackingInterval);
+                    }
+                }
+            } catch (e) {
+                console.error('Tracking ping failed', e);
+            }
+        }
+        
+        document.getElementById('new-swap-btn').addEventListener('click', () => {
+            if (trackingInterval) clearInterval(trackingInterval);
+            trackingWidget.style.display = 'none';
+            swapWidget.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Swap Now';
+            fromAmount.value = currentMinAmount > 0 ? currentMinAmount : '';
+            toAmount.value = '';
+            receiveAddress.value = '';
+            updateReceiveAddressField();
+            fetchExchangeRate();
+        });
 
         function showResult(message, type) {
             resultMessage.innerHTML = message;
@@ -1122,35 +1281,39 @@
         function swapCurrencies() {
             const tempFrom   = fromCurrency.value;
             const tempTo     = toCurrency.value;
-            const tempAmount = fromAmount.value;
             fromCurrency.value = tempTo;
             toCurrency.value   = tempFrom;
-            fromAmount.value   = toAmount.value || tempAmount;
             updateSymbols();
             updateReceiveAddressField();
-            fetchExchangeRate();
+            fetchMinAmount().then(fetchExchangeRate);
         }
 
-        function copyOnionAddress() {
-            const onionAddress = document.querySelector('.onion-address span').textContent;
-            navigator.clipboard.writeText(onionAddress).then(function() {
-                copyOnionBtn.textContent = 'Copied!';
-                copyOnionBtn.classList.add('copied');
-                setTimeout(function() {
-                    copyOnionBtn.textContent = 'Copy Address';
-                    copyOnionBtn.classList.remove('copied');
-                }, 2000);
-            });
-        }
-
-        fromCurrency.addEventListener('change', function() { updateSymbols(); fetchExchangeRate(); });
-        toCurrency.addEventListener('change', function() { updateSymbols(); updateReceiveAddressField(); fetchExchangeRate(); });
-        fromAmount.addEventListener('input', function() {
-            if (fromAmount.value && parseFloat(fromAmount.value) > 0) fetchExchangeRate();
+        fromCurrency.addEventListener('change', () => { updateSymbols(); fetchMinAmount().then(fetchExchangeRate); });
+        toCurrency.addEventListener('change', () => { updateSymbols(); updateReceiveAddressField(); fetchMinAmount().then(fetchExchangeRate); });
+        
+        let typingTimer;
+        fromAmount.addEventListener('input', () => {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(() => {
+                if (fromAmount.value && parseFloat(fromAmount.value) > 0) fetchExchangeRate();
+            }, 600);
         });
+        
         submitBtn.addEventListener('click', createTransaction);
         swapDirection.addEventListener('click', swapCurrencies);
-        copyOnionBtn.addEventListener('click', copyOnionAddress);
+        if(copyOnionBtn) {
+            copyOnionBtn.addEventListener('click', () => {
+                const onionAddress = document.querySelector('.onion-address span').textContent;
+                navigator.clipboard.writeText(onionAddress).then(() => {
+                    copyOnionBtn.textContent = 'Copied!';
+                    copyOnionBtn.classList.add('copied');
+                    setTimeout(() => {
+                        copyOnionBtn.textContent = 'Copy Address';
+                        copyOnionBtn.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        }
 
         // Modal Logic
         const tosModal     = document.getElementById('tos-modal');
@@ -1160,10 +1323,16 @@
         const closeBtns    = document.querySelectorAll('.modal-close');
 
         function openModal(modal)  { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
-        function closeModal(modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+        function closeModal(modal) { 
+            modal.style.display = 'none'; 
+            document.body.style.overflow = 'auto'; 
+            if (window.location.hash === '#terms' || window.location.hash === '#privacy') {
+                history.replaceState(null, null, ' ');
+            }
+        }
 
-        tosLink.addEventListener('click', function() { openModal(tosModal); });
-        privacyLink.addEventListener('click', function() { openModal(privacyModal); });
+        tosLink.addEventListener('click', (e) => { e.preventDefault(); openModal(tosModal); });
+        privacyLink.addEventListener('click', (e) => { e.preventDefault(); openModal(privacyModal); });
         closeBtns.forEach(function(btn) {
             btn.addEventListener('click', function() { closeModal(tosModal); closeModal(privacyModal); });
         });
@@ -1171,39 +1340,19 @@
             if (e.target === tosModal)     closeModal(tosModal);
             if (e.target === privacyModal) closeModal(privacyModal);
         });
-
-        // Preload all rates in one CoinGecko request
-        async function preloadAllRates() {
-            swapRate.textContent = 'Loading rates...';
-            try {
-                const ids      = [...new Set(Object.values(currencyToCoingecko))].join(',');
-                const url      = CONFIG.coingeckoBaseUrl + '/simple/price?ids=' + ids + '&vs_currencies=usd';
-                const response = await fetch(url);
-                if (response.ok) {
-                    const data = await response.json();
-                    const currencies = Object.keys(currencyToCoingecko);
-                    currencies.forEach(function(from) {
-                        currencies.forEach(function(to) {
-                            if (from !== to) {
-                                const fromPrice = data[currencyToCoingecko[from]] && data[currencyToCoingecko[from]].usd;
-                                const toPrice   = data[currencyToCoingecko[to]] && data[currencyToCoingecko[to]].usd;
-                                if (fromPrice && toPrice) {
-                                    cachedRates[from + '_' + to] = fromPrice / toPrice;
-                                }
-                            }
-                        });
-                    });
-                }
-            } catch (e) {
-                console.warn('Preload rates failed:', e);
-            }
-            swapRate.textContent = '';
+        
+        // Handle URL hashes on load
+        function checkHash() {
+            if (window.location.hash === '#terms') openModal(tosModal);
+            if (window.location.hash === '#privacy') openModal(privacyModal);
         }
+        window.addEventListener('hashchange', checkHash);
 
         // Initialization
         updateSymbols();
         updateReceiveAddressField();
-        preloadAllRates().then(function() { fetchExchangeRate(); });
+        fetchMinAmount().then(fetchExchangeRate);
+        checkHash();
     </script>
 </body>
 </html>
