@@ -16,12 +16,12 @@
         :root {
             --primary: #ff6600;
             --primary-dark: #cc5200;
-            --bg: #0a0a0a;
-            --bg-card: rgba(18, 18, 18, 0.4);
+            --bg: #050505;
+            --bg-card: rgba(5, 5, 5, 0.65);
             --text: #ffffff;
-            --text-muted: #a0a0a0;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-muted: #888888;
+            --glass: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.05);
             --success: #00ff88;
             --error: #ff4444;
         }
@@ -49,8 +49,11 @@
             background: 
                 radial-gradient(at 0% 0%, hsla(22, 100%, 50%, 0.08) 0, transparent 50%), 
                 radial-gradient(at 100% 0%, hsla(30, 100%, 50%, 0.05) 0, transparent 50%), 
-                radial-gradient(at 100% 100%, hsla(20, 100%, 50%, 0.04) 0, transparent 50%), 
-                radial-gradient(at 0% 100%, hsla(25, 100%, 50%, 0.05) 0, transparent 50%);
+                radial-gradient(at 100% 100%, hsla(20, 100%, 50%, 0.03) 0, transparent 50%), 
+                radial-gradient(at 0% 100%, hsla(25, 100%, 50%, 0.04) 0, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
             z-index: -1;
         }
 
@@ -158,12 +161,12 @@
             max-width: 480px;
             margin: 0 auto;
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--glass-border);
             border-radius: 1.5rem;
             padding: 1.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.7);
         }
 
         .swap-header {
@@ -740,6 +743,7 @@
                     <path d="M16 6v20M10 11h12M10 21h12" stroke="#ff6600" stroke-width="2" stroke-linecap="round"/>
                 </svg>
                 MoneroSwap
+                <span style="font-size: 0.5em; background: var(--glass); border: 1px solid var(--glass-border); padding: 0.15rem 0.5rem; border-radius: 1rem; color: var(--text-muted); font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: 0.05em; vertical-align: middle; margin-left: 0.25rem;">v1.0</span>
             </a>
             <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
                 <a href="https://github.com/richardvzla888/moneroswap.cloud" target="_blank" rel="noopener" class="github-badge">
