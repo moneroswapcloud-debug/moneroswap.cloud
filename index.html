@@ -13,11 +13,11 @@
             --primary: #ff6600;
             --primary-dark: #cc5200;
             --bg: #0a0a0a;
-            --bg-card: #121212;
+            --bg-card: rgba(18, 18, 18, 0.4);
             --text: #ffffff;
             --text-muted: #a0a0a0;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
             --success: #00ff88;
             --error: #ff4444;
         }
@@ -79,12 +79,14 @@
             height: 32px;
         }
 
-        .onion-badge {
+        .onion-badge, .github-badge {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
             background: var(--glass);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--primary);
             border-radius: 2rem;
             font-size: 0.875rem;
@@ -93,11 +95,11 @@
             transition: all 0.3s ease;
         }
 
-        .onion-badge:hover {
+        .onion-badge:hover, .github-badge:hover {
             background: rgba(255, 102, 0, 0.1);
         }
 
-        .onion-badge svg {
+        .onion-badge svg, .github-badge svg {
             width: 16px;
             height: 16px;
         }
@@ -152,6 +154,8 @@
             max-width: 480px;
             margin: 0 auto;
             background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             border-radius: 1.5rem;
             padding: 1.5rem;
@@ -675,13 +679,21 @@
                 </svg>
                 MoneroSwap
             </a>
-            <a href="#onion" class="onion-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
-                    <path d="M12 6v12M8 9h8M8 15h8"/>
-                </svg>
-                Onion Version
-            </a>
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                <a href="https://github.com/richardvzla888/moneroswap.cloud" target="_blank" rel="noopener" class="github-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.379.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+                    </svg>
+                    Open Source
+                </a>
+                <a href="#onion" class="onion-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                        <path d="M12 6v12M8 9h8M8 15h8"/>
+                    </svg>
+                    Onion Version
+                </a>
+            </div>
         </header>
 
         <section class="hero">
@@ -709,6 +721,16 @@
                             <option value="USDT">Tether (USDT)</option>
                             <option value="LTC">Litecoin (LTC)</option>
                             <option value="XMR" selected>Monero (XMR)</option>
+                            <option value="XRP">Ripple (XRP)</option>
+                            <option value="ADA">Cardano (ADA)</option>
+                            <option value="SOL">Solana (SOL)</option>
+                            <option value="DOGE">Dogecoin (DOGE)</option>
+                            <option value="DOT">Polkadot (DOT)</option>
+                            <option value="MATIC">Polygon (MATIC)</option>
+                            <option value="AVAX">Avalanche (AVAX)</option>
+                            <option value="LINK">Chainlink (LINK)</option>
+                            <option value="UNI">Uniswap (UNI)</option>
+                            <option value="BNB">BNB (BNB)</option>
                         </select>
                     </div>
                     <div class="amount-input-wrapper" style="margin-top: 0.5rem;">
@@ -734,6 +756,16 @@
                             <option value="ETH">Ethereum (ETH)</option>
                             <option value="USDT">Tether (USDT)</option>
                             <option value="LTC">Litecoin (LTC)</option>
+                            <option value="XRP">Ripple (XRP)</option>
+                            <option value="ADA">Cardano (ADA)</option>
+                            <option value="SOL">Solana (SOL)</option>
+                            <option value="DOGE">Dogecoin (DOGE)</option>
+                            <option value="DOT">Polkadot (DOT)</option>
+                            <option value="MATIC">Polygon (MATIC)</option>
+                            <option value="AVAX">Avalanche (AVAX)</option>
+                            <option value="LINK">Chainlink (LINK)</option>
+                            <option value="UNI">Uniswap (UNI)</option>
+                            <option value="BNB">BNB (BNB)</option>
                         </select>
                     </div>
                     <div class="amount-input-wrapper" style="margin-top: 0.5rem;">
@@ -743,8 +775,8 @@
                 </div>
 
                 <div class="input-group">
-                    <label class="input-label">XMR Receive Address</label>
-                    <input type="text" class="address-input" id="receive-address" placeholder="44AFFq5kSiGBoZ4oMD9fn肛...">
+                    <label class="input-label" id="receive-label">Receive Address</label>
+                    <input type="text" class="address-input" id="receive-address" placeholder="Enter your wallet address">
                 </div>
 
                 <div class="exchange-info">
@@ -853,43 +885,74 @@
         const CONFIG = {
             apiKey: '353e12df6ccc210ab17c8cc917aad2aa47b84cd76e764c8dd27944dfb150f60d',
             refCode: 'acd06ccaddab66',
-            apiEndpoint: '/api',
-            changenowBaseUrl: 'https://api.changenow.io'
+            changenowBaseUrl: 'https://api.changenow.io/v1',
+            coingeckoBaseUrl: 'https://api.coingecko.com/api/v3'
         };
 
-        // Elementos del DOM
-        const fromCurrency = document.getElementById('from-currency');
-        const toCurrency = document.getElementById('to-currency');
-        const fromAmount = document.getElementById('from-amount');
-        const toAmount = document.getElementById('to-amount');
+        const currencyToCoingecko = {
+            'BTC': 'bitcoin', 'ETH': 'ethereum', 'XMR': 'monero',
+            'USDT': 'tether', 'LTC': 'litecoin', 'XRP': 'ripple',
+            'ADA': 'cardano', 'SOL': 'solana', 'DOGE': 'dogecoin',
+            'DOT': 'polkadot', 'MATIC': 'matic-network', 'AVAX': 'avalanche-2',
+            'LINK': 'chainlink', 'UNI': 'uniswap', 'BNB': 'binancecoin'
+        };
+
+        const currencyValidation = {
+            'BTC':  { regex: /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,62}$/, placeholder: 'bc1q... or 1... or 3...' },
+            'ETH':  { regex: /^0x[a-fA-F0-9]{40}$/, placeholder: '0x...' },
+            'XMR':  { regex: /^4[0-9AB][a-km-zA-HJ-NP-Z]{93}$|^8[a-km-zA-HJ-NP-Z]{95}$/, placeholder: '4... (95 characters)' },
+            'USDT': { regex: /^0x[a-fA-F0-9]{40}$|^T[a-zA-Z0-9]{33}$/, placeholder: '0x... or T...' },
+            'LTC':  { regex: /^[LM3][a-km-zA-HJ-NP-Z]{26,33}$/, placeholder: 'L... or M... or 3...' },
+            'XRP':  { regex: /^r[1-9A-HJ-NP-Za-km-z]{24,34}$/, placeholder: 'r...' },
+            'ADA':  { regex: /^addr1[a-z0-9]{58}$/, placeholder: 'addr1...' },
+            'SOL':  { regex: /^[1-9A-HJ-NP-Za-km-z]{32,44}$/, placeholder: 'Solana address...' },
+            'DOGE': { regex: /^D[5-9A-HJ-NP-U][a-km-zA-HJ-NP-Z]{32}$/, placeholder: 'D...' },
+            'DOT':  { regex: /^1[2-9a-zA-Z]{32}$/, placeholder: 'Polkadot address...' },
+            'MATIC':{ regex: /^0x[a-fA-F0-9]{40}$/, placeholder: '0x...' },
+            'AVAX': { regex: /^X-avax1[a-z0-9]{39}$|^0x[a-fA-F0-9]{40}$/, placeholder: 'X-avax1... or 0x...' },
+            'LINK': { regex: /^0x[a-fA-F0-9]{40}$/, placeholder: '0x...' },
+            'UNI':  { regex: /^0x[a-fA-F0-9]{40}$/, placeholder: '0x...' },
+            'BNB':  { regex: /^bnb1[a-z0-9]{38}$|^0x[a-fA-F0-9]{40}$/, placeholder: 'bnb1... or 0x...' }
+        };
+
+        // DOM Elements
+        const fromCurrency   = document.getElementById('from-currency');
+        const toCurrency     = document.getElementById('to-currency');
+        const fromAmount     = document.getElementById('from-amount');
+        const toAmount       = document.getElementById('to-amount');
         const receiveAddress = document.getElementById('receive-address');
-        const fromSymbol = document.getElementById('from-symbol');
-        const toSymbol = document.getElementById('to-symbol');
-        const swapRate = document.getElementById('swap-rate');
-        const exchangeRate = document.getElementById('exchange-rate');
-        const networkFee = document.getElementById('network-fee');
-        const estimatedTime = document.getElementById('estimated-time');
-        const submitBtn = document.getElementById('submit-btn');
-        const resultMessage = document.getElementById('result-message');
-        const swapDirection = document.getElementById('swap-direction');
-        const copyOnionBtn = document.getElementById('copy-onion-btn');
+        const submitBtn      = document.getElementById('submit-btn');
+        const swapDirection  = document.getElementById('swap-direction');
+        const swapRate       = document.getElementById('swap-rate');
+        const exchangeRate   = document.getElementById('exchange-rate');
+        const networkFee     = document.getElementById('network-fee');
+        const estimatedTime  = document.getElementById('estimated-time');
+        const copyOnionBtn   = document.getElementById('copy-onion-btn');
+        const resultMessage  = document.getElementById('result-message');
 
-        // Estado
-        let estimatedAmount = null;
-        let lastValidFrom = null;
-        let lastValidTo = null;
+        // State
+        let cachedRates     = {};
+        let estimatedAmount = 0;
+        let lastValidFrom   = null;
+        let lastValidTo     = null;
 
-        // Update currency symbols
         function updateSymbols() {
-            fromSymbol.textContent = fromCurrency.value;
-            toSymbol.textContent = toCurrency.value;
+            document.getElementById('from-symbol').textContent = fromCurrency.value;
+            document.getElementById('to-symbol').textContent   = toCurrency.value;
         }
 
-        // Get exchange rates
+        function updateReceiveAddressField() {
+            const to    = toCurrency.value;
+            const label = document.getElementById('receive-label');
+            label.textContent = 'Receive Address (' + to + ')';
+            const validation  = currencyValidation[to];
+            receiveAddress.placeholder = validation ? validation.placeholder : 'Enter your wallet address';
+        }
+
         async function fetchExchangeRate() {
-            const from = fromCurrency.value;
-            const to = toCurrency.value;
-            const amount = fromAmount.value || 1;
+            const from   = fromCurrency.value;
+            const to     = toCurrency.value;
+            const amount = parseFloat(fromAmount.value) || 1;
 
             if (from === to) {
                 toAmount.value = amount;
@@ -897,214 +960,250 @@
                 return;
             }
 
-            try {
-                const url = `${CONFIG.apiEndpoint}/v2/markets/estimate?fromCurrency=${from.toLowerCase()}&toCurrency=${to.toLowerCase()}&fromAmount=${amount}&type=direct`;
+            const fromId   = currencyToCoingecko[from];
+            const toId     = currencyToCoingecko[to];
+            const cacheKey = from + '_' + to;
 
-                const response = await fetch(url, {
-                    headers: {
-                        'x-changenow-api-key': CONFIG.apiKey
-                    }
-                });
+            if (!fromId || !toId) {
+                exchangeRate.textContent = 'Currency not supported';
+                return;
+            }
 
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.message || `HTTP ${response.status}`);
-                }
-
-                const data = await response.json();
-
-                if (data.error) throw new Error(data.error);
-
-                estimatedAmount = data.toAmount;
-                const rate = data.toAmount / amount;
-
-                toAmount.value = estimatedAmount.toFixed(8);
-                exchangeRate.textContent = `1 ${from} ≈ ${rate.toFixed(8)} ${to}`;
-                networkFee.textContent = data.networkFee ? `${data.networkFee} ${to}` : 'Included';
+            if (cachedRates[cacheKey]) {
+                const rate      = cachedRates[cacheKey];
+                estimatedAmount = amount * rate;
+                toAmount.value  = estimatedAmount.toFixed(8);
+                exchangeRate.textContent  = '1 ' + from + ' ≈ ' + rate.toFixed(8) + ' ' + to;
+                networkFee.textContent    = '~1%';
                 estimatedTime.textContent = '~15-30 min';
-                swapRate.textContent = `1 ${from} ≈ ${rate.toFixed(6)} ${to}`;
+                swapRate.textContent      = '1 ' + from + ' ≈ ' + rate.toFixed(6) + ' ' + to;
+                return;
+            }
 
+            try {
+                const url      = CONFIG.coingeckoBaseUrl + '/simple/price?ids=' + fromId + ',' + toId + '&vs_currencies=usd';
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const data      = await response.json();
+                const fromPrice = data[fromId] && data[fromId].usd;
+                const toPrice   = data[toId] && data[toId].usd;
+                if (!fromPrice || !toPrice) throw new Error('Price data missing');
+
+                // Correct: 1 FROM = (fromPrice / toPrice) TO
+                const rate = fromPrice / toPrice;
+
+                cachedRates[cacheKey] = rate;
+                estimatedAmount       = amount * rate;
+
+                toAmount.value            = estimatedAmount.toFixed(8);
+                exchangeRate.textContent  = '1 ' + from + ' ≈ ' + rate.toFixed(8) + ' ' + to;
+                networkFee.textContent    = '~1%';
+                estimatedTime.textContent = '~15-30 min';
+                swapRate.textContent      = '1 ' + from + ' ≈ ' + rate.toFixed(6) + ' ' + to;
                 lastValidFrom = from;
-                lastValidTo = to;
+                lastValidTo   = to;
             } catch (error) {
                 console.error('Error fetching rate:', error);
-                exchangeRate.textContent = 'Error loading';
-                networkFee.textContent = '---';
-                swapRate.textContent = 'Rate unavailable';
+                exchangeRate.textContent = 'Error loading rate';
+                networkFee.textContent   = '---';
+                swapRate.textContent     = 'Rate unavailable';
             }
         }
 
-        // Validate Monero address
-        function validateMoneroAddress(address) {
-            // Standard Monero address: 95 characters, starts with 4
-            // Subaddress: starts with 8
-            const standardRegex = /^4[0-9AB][a-km-zA-HJ-NP-Z]{93}$/;
-            const subaddressRegex = /^8[a-km-zA-HJ-NP-Z]{1}[a-km-zA-HJ-NP-Z]{94}$/;
-            const integratedRegex = /^4[0-9AB][a-km-zA-HJ-NP-Z]{8}[a-km-zA-HJ-NP-Z]{85}$/;
-            
-            return standardRegex.test(address) || subaddressRegex.test(address) || integratedRegex.test(address);
+        async function getExactRate(from, to, amount) {
+            try {
+                const endpoint = CONFIG.changenowBaseUrl + '/exchange-amount/' + from.toLowerCase() + '_' + to.toLowerCase() + '/?amount=' + amount + '&type=direct';
+                const url      = 'https://corsproxy.io/?' + encodeURIComponent(endpoint);
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data   = await response.json();
+                    const result = parseFloat(data.estimatedAmount || data.result);
+                    if (result && parseFloat(amount) > 0) {
+                        return { rate: result / parseFloat(amount), valid: true };
+                    }
+                }
+            } catch (e) {
+                console.warn('getExactRate failed:', e);
+            }
+            return { rate: null, valid: false };
         }
 
-        // Create transaction
         async function createTransaction() {
-            const from = fromCurrency.value;
-            const to = toCurrency.value;
-            const amount = fromAmount.value;
+            const from    = fromCurrency.value;
+            const to      = toCurrency.value;
+            const amount  = fromAmount.value;
             const address = receiveAddress.value.trim();
 
-            // Validations
             if (!amount || parseFloat(amount) <= 0) {
                 showResult('Please enter a valid amount.', 'error');
                 return;
             }
-
-            if (!validateMoneroAddress(address)) {
-                showResult('Please enter a valid Monero address.', 'error');
+            if (!address) {
+                showResult('Please enter your ' + to + ' wallet address.', 'error');
+                return;
+            }
+            if (currencyValidation[to] && !currencyValidation[to].regex.test(address)) {
+                showResult('Please enter a valid ' + to + ' address.', 'error');
                 return;
             }
 
-            submitBtn.disabled = true;
+            submitBtn.disabled    = true;
+            submitBtn.textContent = 'Getting exact rate...';
+
+            const exactRateData = await getExactRate(from, to, amount);
+            const cacheKey      = from + '_' + to;
+            const displayRate   = exactRateData.valid
+                ? exactRateData.rate
+                : (cachedRates[cacheKey] || (estimatedAmount / parseFloat(amount)));
+            const finalAmount   = (parseFloat(amount) * displayRate).toFixed(8);
+
+            submitBtn.textContent = 'Confirm Swap';
+
+            const confirmSwap = confirm(
+                'Swap ' + amount + ' ' + from + ' for approximately ' + finalAmount + ' ' + to + '?\n\nNote: The exact amount will be confirmed by ChangeNOW at processing time.'
+            );
+
+            if (!confirmSwap) {
+                submitBtn.disabled    = false;
+                submitBtn.textContent = 'Swap Now';
+                return;
+            }
+
             submitBtn.textContent = 'Processing...';
 
             try {
-                const url = `${CONFIG.apiEndpoint}/v2/exchange`;
-
+                const endpoint = CONFIG.changenowBaseUrl + '/create-transaction';
+                const url      = 'https://corsproxy.io/?' + encodeURIComponent(endpoint);
                 const body = {
                     fromCurrency: from.toLowerCase(),
-                    toCurrency: to.toLowerCase(),
-                    fromNetwork: from.toLowerCase(),
-                    toNetwork: to.toLowerCase(),
-                    fromAmount: parseFloat(amount),
-                    address: address,
-                    flow: 'standard',
-                    type: 'direct'
+                    toCurrency:   to.toLowerCase(),
+                    fromNetwork:  from.toLowerCase(),
+                    toNetwork:    to.toLowerCase(),
+                    fromAmount:   parseFloat(amount),
+                    address:      address,
+                    flow:         'standard',
+                    type:         'direct',
+                    apiKey:       CONFIG.apiKey,
+                    refCode:      CONFIG.refCode
                 };
-
                 const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-changenow-api-key': CONFIG.apiKey
-                    },
-                    body: JSON.stringify(body)
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify(body)
                 });
-
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.message || `HTTP ${response.status}`);
+                    const errorData = await response.json().catch(function() { return {}; });
+                    throw new Error(errorData.message || 'HTTP ' + response.status);
                 }
-
                 const data = await response.json();
-
                 if (data.error) throw new Error(data.error);
-
-                // Mostrar resultado exitoso
                 const depositAddress = data.payinAddress;
-                showResult(`
-                    <strong>Transaction created!</strong><br>
-                    Send exactly <strong>${data.fromAmount} ${from}</strong> to:<br>
-                    <a href="#" onclick="navigator.clipboard.writeText('${depositAddress}'); return false;">${depositAddress}</a><br>
-                    <small>Transaction ID: ${data.id}</small>
-                `, 'success');
-
+                showResult(
+                    '<strong>Transaction created!</strong><br>' +
+                    'Send exactly <strong>' + data.fromAmount + ' ' + from + '</strong> to:<br>' +
+                    '<a href="#" onclick="navigator.clipboard.writeText(\'' + depositAddress + '\'); this.textContent=\'Copied!\'; return false;">' + depositAddress + '</a><br>' +
+                    '<small>Transaction ID: ' + data.id + '</small>',
+                    'success'
+                );
             } catch (error) {
                 console.error('Error creating transaction:', error);
-                showResult(`Error: ${error.message || 'Please try again later'}`, 'error');
+                showResult('Error: ' + (error.message || 'Please try again later'), 'error');
             } finally {
-                submitBtn.disabled = false;
+                submitBtn.disabled    = false;
                 submitBtn.textContent = 'Swap Now';
             }
         }
 
-        // Mostrar mensaje de resultado
         function showResult(message, type) {
             resultMessage.innerHTML = message;
             resultMessage.className = 'result-message ' + type;
         }
 
-        // Intercambiar direcciones
         function swapCurrencies() {
-            const tempFrom = fromCurrency.value;
-            const tempTo = toCurrency.value;
+            const tempFrom   = fromCurrency.value;
+            const tempTo     = toCurrency.value;
             const tempAmount = fromAmount.value;
-            
             fromCurrency.value = tempTo;
-            toCurrency.value = tempFrom;
-            fromAmount.value = toAmount.value || tempAmount;
-            
+            toCurrency.value   = tempFrom;
+            fromAmount.value   = toAmount.value || tempAmount;
             updateSymbols();
+            updateReceiveAddressField();
             fetchExchangeRate();
         }
 
-        // Copy Onion address
         function copyOnionAddress() {
             const onionAddress = document.querySelector('.onion-address span').textContent;
-            navigator.clipboard.writeText(onionAddress).then(() => {
+            navigator.clipboard.writeText(onionAddress).then(function() {
                 copyOnionBtn.textContent = 'Copied!';
                 copyOnionBtn.classList.add('copied');
-                setTimeout(() => {
+                setTimeout(function() {
                     copyOnionBtn.textContent = 'Copy Address';
                     copyOnionBtn.classList.remove('copied');
                 }, 2000);
             });
         }
 
-        // Event Listeners
-        fromCurrency.addEventListener('change', () => {
-            updateSymbols();
-            fetchExchangeRate();
+        fromCurrency.addEventListener('change', function() { updateSymbols(); fetchExchangeRate(); });
+        toCurrency.addEventListener('change', function() { updateSymbols(); updateReceiveAddressField(); fetchExchangeRate(); });
+        fromAmount.addEventListener('input', function() {
+            if (fromAmount.value && parseFloat(fromAmount.value) > 0) fetchExchangeRate();
         });
-
-        toCurrency.addEventListener('change', () => {
-            updateSymbols();
-            fetchExchangeRate();
-        });
-
-        fromAmount.addEventListener('input', () => {
-            if (fromAmount.value && parseFloat(fromAmount.value) > 0) {
-                fetchExchangeRate();
-            }
-        });
-
         submitBtn.addEventListener('click', createTransaction);
         swapDirection.addEventListener('click', swapCurrencies);
         copyOnionBtn.addEventListener('click', copyOnionAddress);
 
         // Modal Logic
-        const tosModal = document.getElementById('tos-modal');
+        const tosModal     = document.getElementById('tos-modal');
         const privacyModal = document.getElementById('privacy-modal');
-        const tosLink = document.getElementById('tos-link');
-        const privacyLink = document.getElementById('privacy-link');
-        const closeBtns = document.querySelectorAll('.modal-close');
+        const tosLink      = document.getElementById('tos-link');
+        const privacyLink  = document.getElementById('privacy-link');
+        const closeBtns    = document.querySelectorAll('.modal-close');
 
-        function openModal(modal) {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+        function openModal(modal)  { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function closeModal(modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
 
-        function closeModal(modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        tosLink.addEventListener('click', () => openModal(tosModal));
-        privacyLink.addEventListener('click', () => openModal(privacyModal));
-
-        closeBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                closeModal(tosModal);
-                closeModal(privacyModal);
-            });
+        tosLink.addEventListener('click', function() { openModal(tosModal); });
+        privacyLink.addEventListener('click', function() { openModal(privacyModal); });
+        closeBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() { closeModal(tosModal); closeModal(privacyModal); });
         });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === tosModal) closeModal(tosModal);
+        window.addEventListener('click', function(e) {
+            if (e.target === tosModal)     closeModal(tosModal);
             if (e.target === privacyModal) closeModal(privacyModal);
         });
 
+        // Preload all rates in one CoinGecko request
+        async function preloadAllRates() {
+            swapRate.textContent = 'Loading rates...';
+            try {
+                const ids      = [...new Set(Object.values(currencyToCoingecko))].join(',');
+                const url      = CONFIG.coingeckoBaseUrl + '/simple/price?ids=' + ids + '&vs_currencies=usd';
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    const currencies = Object.keys(currencyToCoingecko);
+                    currencies.forEach(function(from) {
+                        currencies.forEach(function(to) {
+                            if (from !== to) {
+                                const fromPrice = data[currencyToCoingecko[from]] && data[currencyToCoingecko[from]].usd;
+                                const toPrice   = data[currencyToCoingecko[to]] && data[currencyToCoingecko[to]].usd;
+                                if (fromPrice && toPrice) {
+                                    cachedRates[from + '_' + to] = fromPrice / toPrice;
+                                }
+                            }
+                        });
+                    });
+                }
+            } catch (e) {
+                console.warn('Preload rates failed:', e);
+            }
+            swapRate.textContent = '';
+        }
+
         // Initialization
         updateSymbols();
-        fetchExchangeRate();
+        updateReceiveAddressField();
+        preloadAllRates().then(function() { fetchExchangeRate(); });
     </script>
 </body>
 </html>
