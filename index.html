@@ -749,10 +749,16 @@
 
                 <div class="exchange-info">
                     <div class="exchange-row">
-<span class="exchange-label">Exchange Rate</span>
+                        <span class="exchange-label">Exchange Rate</span>
+                        <span class="exchange-value" id="exchange-rate">---</span>
+                    </div>
+                    <div class="exchange-row">
                         <span class="exchange-label">Network Fee</span>
+                        <span class="exchange-value" id="network-fee">---</span>
+                    </div>
+                    <div class="exchange-row">
                         <span class="exchange-label">Estimated Time</span>
-                        <span class="exchange-value" id="estimated-time">---</span>
+                        <span class="exchange-value" id="estimated-time">~15-30 min</span>
                     </div>
                 </div>
 
@@ -892,30 +898,39 @@
             }
 
             try {
-                const url = `${CONFIG.apiEndpoint}/v2/exchange/estimated-amount?api_key=${CONFIG.apiKey}&from=${from}&to=${to}&amount=${amount}`;
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Error fetching rate');
-                
+                const url = `${CONFIG.apiEndpoint}/v2/markets/estimate?fromCurrency=${from.toLowerCase()}&toCurrency=${to.toLowerCase()}&fromAmount=${amount}&type=direct`;
+
+                const response = await fetch(url, {
+                    headers: {
+                        'x-changenow-api-key': CONFIG.apiKey
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || `HTTP ${response.status}`);
+                }
+
                 const data = await response.json();
-                
+
                 if (data.error) throw new Error(data.error);
-                
-                estimatedAmount = data.estimatedAmount;
-                const rate = data.estimatedAmount / amount;
-                
-                toAmount.value = estimatedAmount;
+
+                estimatedAmount = data.toAmount;
+                const rate = data.toAmount / amount;
+
+                toAmount.value = estimatedAmount.toFixed(8);
                 exchangeRate.textContent = `1 ${from} ≈ ${rate.toFixed(8)} ${to}`;
-                networkFee.textContent = `${data.fixedFee || 0} ${to} + ${(data.variableFee || 0).toFixed(2)}%`;
-                estimatedTime.textContent = data.estimatedDepositConfirmations ? `${data.estimatedDepositConfirmations} confirmations` : '~15-30 min';
+                networkFee.textContent = data.networkFee ? `${data.networkFee} ${to}` : 'Included';
+                estimatedTime.textContent = '~15-30 min';
                 swapRate.textContent = `1 ${from} ≈ ${rate.toFixed(6)} ${to}`;
-                
+
                 lastValidFrom = from;
                 lastValidTo = to;
             } catch (error) {
                 console.error('Error fetching rate:', error);
-                exchangeRate.textContent = 'Error';
-                swapRate.textContent = 'Try again';
+                exchangeRate.textContent = 'Error loading';
+                networkFee.textContent = '---';
+                swapRate.textContent = 'Rate unavailable';
             }
         }
 
@@ -952,41 +967,44 @@
             submitBtn.textContent = 'Processing...';
 
             try {
-                const url = `${CONFIG.apiEndpoint}/v2/exchange/create`;
-                
+                const url = `${CONFIG.apiEndpoint}/v2/exchange`;
+
                 const body = {
-                    api_key: CONFIG.apiKey,
-                    refCode: CONFIG.refCode,
-                    from: from,
-                    to: to,
+                    fromCurrency: from.toLowerCase(),
+                    toCurrency: to.toLowerCase(),
+                    fromNetwork: from.toLowerCase(),
+                    toNetwork: to.toLowerCase(),
+                    fromAmount: parseFloat(amount),
                     address: address,
-                    amount: parseFloat(amount),
-                    userId: null,
-                    returnUrl: window.location.href,
-                    payoutAddress: address
+                    flow: 'standard',
+                    type: 'direct'
                 };
 
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'x-changenow-api-key': CONFIG.apiKey
                     },
                     body: JSON.stringify(body)
                 });
 
-                if (!response.ok) throw new Error('Error creating transaction');
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || `HTTP ${response.status}`);
+                }
 
                 const data = await response.json();
 
                 if (data.error) throw new Error(data.error);
 
                 // Mostrar resultado exitoso
-                const depositAddress = data.payinAddress || data.depositAddress;
+                const depositAddress = data.payinAddress;
                 showResult(`
                     <strong>Transaction created!</strong><br>
-                    Send exactly <strong>${data.amountToSend || amount} ${from}</strong> to:<br>
+                    Send exactly <strong>${data.fromAmount} ${from}</strong> to:<br>
                     <a href="#" onclick="navigator.clipboard.writeText('${depositAddress}'); return false;">${depositAddress}</a><br>
-                    <small>Copy and paste this address in your wallet</small>
+                    <small>Transaction ID: ${data.id}</small>
                 `, 'success');
 
             } catch (error) {
