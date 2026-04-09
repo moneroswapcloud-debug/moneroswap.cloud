@@ -1,46 +1,75 @@
-# MoneroSwap.cloud
+<p align="center">
+  <img src="logo_moneroswap_final.png" alt="MoneroSwap Logo" width="250">
+</p>
 
-An anonymous, non-custodial cryptocurrency exchange platform with a focus on **Monero (XMR)**. Swap your assets instantly with no KYC and total privacy.
+<h1 align="center">MoneroSwap.cloud</h1>
 
-## Features
+<p align="center">
+  <strong>Anonymous, Non-Custodial Cryptocurrency Exchange</strong><br>
+  The safest way to move your assets. No records, no tracking, no KYC.
+</p>
 
-- **Anonymous Exchange**: No registration or personal data required.
-- **No KYC**: We never ask for identity documents.
-- **Privacy by Design**: No logs, no IP tracking, and no third-party analytics.
-- **Tor Network Support**: Accessible via a dedicated `.onion` hidden service for maximum anonymity.
-- **Powered by ChangeNOW**: Leverages the ChangeNOW.io liquidity infrastructure.
+<p align="center">
+  <img src="https://img.shields.io/badge/Privacy-Absolute-orange?style=for-the-badge" alt="Privacy">
+  <img src="https://img.shields.io/badge/KYC-FREE-green?style=for-the-badge" alt="No KYC">
+  <img src="https://img.shields.io/badge/Network-Tor%20Ready-blueviolet?style=for-the-badge" alt="Tor Ready">
+  <img src="https://img.shields.io/badge/Open--Source-GPLv3-blue?style=for-the-badge" alt="GPLv3">
+</p>
 
-## Tor Access
+---
 
-For maximum privacy, use the following Tor Hidden Service address:
-`http://hhnaholwijsz5puw3gzvrhipzmcpiyinmjw725rqymq7sfj7pfyetryd.onion`
+MoneroSwap is a privacy-first, single-page application (SPA) that facilitates instant cryptocurrency swaps focusing on **Monero (XMR)**. Leveraging a private Node.js proxy and the ChangeNOW liquidity network, it ensures total anonymity for users across the globe.
 
-## Deployment
+## 🚀 Key Features
 
-The website is a single-file application (`index.html`). To deploy:
+- 🕵️ **Total Anonymity**: No registration, no email, and no account required.
+- 🛡️ **No KYC**: We never request identity verification or personal documents.
+- 🔄 **Non-Custodial**: Your funds are never held by us; swaps happen wallet-to-wallet.
+- 🧅 **Tor Native**: Full support for Tor Hidden Services via a dedicated `.onion` address.
+- 💬 **Community Centric**: Integrated Matrix support for anonymous communication.
 
-1.  Upload `index.html` to any web server (Apache, Nginx, or even static hosting).
-2.  Configure your web server to serve the file.
-3.  (Optional) Set up a Tor Hidden Service pointing to your server's port 80.
+## 🌐 Community & Support
 
-## Configuration
+- **Matrix Space**: [Join our Matrix Channel](https://matrix.to/#/#moneroswap.cloud:matrix.org)
+- **Tor Hidden Service**: `http://hhnaholwijsz5puw3gzvrhipzmcpiyinmjw725rqymq7sfj7pfyetryd.onion`
+- **GitHub**: [richardvzla888/moneroswap.cloud](https://github.com/richardvzla888/moneroswap.cloud)
 
-In `index.html`, you should configure the following constants in the `CONFIG` object:
+## 🛠️ Technical Overview
 
-```javascript
-const CONFIG = {
-    apiKey: '<YOUR_CHANGENOW_API_KEY>',
-    refCode: '<YOUR_CHANGENOW_REF_CODE>',
-    apiEndpoint: '/api', // Proxy recommendation
-    changenowBaseUrl: 'https://api.changenow.io'
-};
-```
+### 1. The Frontend
+A high-performance, responsive Single Page Application built with Vanilla JS and CSS, featuring:
+- Real-time rate estimation and min-amount validation.
+- Live bridge tracking and status updates.
+- Glassmorphism "Cyber-Dark" design.
 
-**Security Note**: It is highly recommended to use a server-side proxy to hide your API Key from the client-side.
+### 2. The Backend (Proxy)
+A minimalist Node.js proxy handles all API interactions to protect the platform's API Keys and ensure user IP addresses are never exposed to third-party liquidity providers.
 
-## License
+## 💻 Deployment
+
+To deploy your own instance of MoneroSwap:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/richardvzla888/moneroswap.cloud.git
+   ```
+
+2. **Configure the Proxy**:
+   Update `changenow-proxy.js` with your affiliate API key.
+
+3. **Run with PM2**:
+   ```bash
+   pm2 start changenow-proxy.js --name moneroswap-proxy
+   ```
+
+4. **Serve are Static Files**:
+   Point your web server (Apache/Nginx) to `index.html`.
+
+## 📄 License
 
 This project is licensed under the **GNU General Public License v3.0**. See the [LICENSE](LICENSE) file for more details.
 
 ---
-*Developed for privacy enthusiasts.*
+<p align="center">
+  <em>Developed for financial sovereignty. Privacy by Default.</em>
+</p>
