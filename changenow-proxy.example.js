@@ -36,8 +36,8 @@ http.createServer((req, res) => {
     method: req.method,
     headers: { 
       'Content-Type': 'application/json',
-      'x-changenow-api-key': '353e12df6ccc210ab17c8cc917aad2aa47b84cd76e764c8dd27944dfb150f60d',
-      'x-changenow-apikey': '353e12df6ccc210ab17c8cc917aad2aa47b84cd76e764c8dd27944dfb150f60d'
+      'x-changenow-api-key': 'YOUR_API_KEY_HERE',
+      'x-changenow-apikey': 'YOUR_API_KEY_HERE'
     }
   };
 
