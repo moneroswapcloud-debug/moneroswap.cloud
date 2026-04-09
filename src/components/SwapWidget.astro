@@ -186,6 +186,7 @@
     let fetchAbortController = null;
     let debounceTimer = null;
     let trackingInterval = null;
+    let currentMinAmount = 0;
 
     function updateSymbols() {
         document.getElementById('from-symbol').textContent = fromCurrency.value;
