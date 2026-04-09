@@ -83,8 +83,9 @@
         }
 
         .logo-icon {
-            width: 32px;
-            height: 32px;
+            width: 128px;
+            height: 128px;
+            object-fit: contain;
         }
 
         .onion-badge, .github-badge {
@@ -903,7 +904,10 @@
 
         <footer>
             <div class="footer-content">
-                <div class="footer-logo">MoneroSwap.cloud</div>
+                <div class="footer-logo">
+                    <img src="/logo_moneroswap_final.png" alt="Logo" class="logo-icon" style="width: 64px; height: 64px;">
+                    <div>MoneroSwap.cloud</div>
+                </div>
                 <div class="footer-links">
                     <a href="#terms" id="tos-link">Terms of Service</a>
                     <a href="#privacy" id="privacy-link">Privacy Policy</a>
