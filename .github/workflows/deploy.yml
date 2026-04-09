@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, fix/astro-automation]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install, build, and upload Astro
+        uses: withastro/action@v2
+        with:
+          path: .
+          node-version: 22
+          package-manager: npm
+        env:
+          PUBLIC_CHANGENOW_API_KEY: ${{ secrets.PUBLIC_CHANGENOW_API_KEY }}
+          PUBLIC_CHANGENOW_REF_CODE: ${{ secrets.PUBLIC_CHANGENOW_REF_CODE }}
+          PUBLIC_PROXY_URL: ${{ secrets.PUBLIC_PROXY_URL }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

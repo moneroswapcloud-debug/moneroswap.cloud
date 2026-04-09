@@ -1,0 +1,142 @@
+---
+---
+<!-- Modals -->
+<div id="tos-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+            <h3 class="modal-title">Terms of Service</h3>
+        </div>
+        <div class="modal-body">
+            <p>Welcome to MoneroSwap. By using our service, you agree to the following terms:</p>
+            
+            <h4>1. Nature of Service</h4>
+            <p>MoneroSwap is a non-custodial cryptocurrency exchange platform. We do not hold your funds; we facilitate the exchange between different digital assets through specialized infrastructure.</p>
+            
+            <h4>2. User Responsibility</h4>
+            <p>You are solely responsible for providing the correct wallet addresses. Transactions on the blockchain are irreversible, and we cannot recover funds sent to the wrong address.</p>
+            
+            <h4>3. Risk Acknowledgment</h4>
+            <p>Digital assets are highly volatile. By using this service, you acknowledge and accept the market risks and the potential for financial loss.</p>
+            
+            <h4>4. Lawful Use</h4>
+            <p>You agree not to use MoneroSwap for any illegal activities, including but not limited to money laundering, financing terrorism, or circumventing legal regulations in your jurisdiction.</p>
+            
+            <h4>5. Limitation of Liability</h4>
+            <p>MoneroSwap is not liable for any losses resulting from user error, network congestion, delays, or failures of third-party liquidity providers.</p>
+        </div>
+    </div>
+</div>
+
+<div id="privacy-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+            <h3 class="modal-title">Privacy Policy</h3>
+        </div>
+        <div class="modal-body">
+            <p>At MoneroSwap, your privacy is our highest priority. We have designed our platform to collect the minimum amount of data necessary.</p>
+            
+            <h4>1. No Personal Data</h4>
+            <p>Since we do not collect personal data, we have nothing to sell or share with third parties, advertisers, or government agencies.</p>
+        </div>
+    </div>
+</div>
+
+<div id="faq-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+            <h3 class="modal-title">Frequently Asked Questions</h3>
+        </div>
+        <div class="modal-body">
+            <h4>What is MoneroSwap?</h4>
+            <p>MoneroSwap is a non-custodial, privacy-focused cryptocurrency exchange.</p>
+            
+            <h4>Is it really anonymous?</h4>
+            <p>Yes. We do not collect any personal data, IP logs, or require registration.</p>
+            
+            <h4>How long does a swap take?</h4>
+            <p>Most transactions are completed within 10-30 minutes.</p>
+        </div>
+    </div>
+</div>
+
+<div id="donation-modal" class="modal-overlay">
+    <div class="modal-content" style="text-align: center;">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+            <h3 class="modal-title">Support MoneroSwap</h3>
+        </div>
+        <div class="modal-body">
+            <p>MoneroSwap is an independent project dedicated to financial privacy. Your donations help us maintain infrastructure.</p>
+            
+            <h4 style="color: #ff3366;">Donate Monero (XMR)</h4>
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--glass-border); margin: 1.5rem 0; word-break: break-all;">
+                <p id="xmr-address" style="font-family: monospace; font-size: 0.85rem; color: var(--text);">463tWEBn5XZJSxLU6uLQnQ2iY9xuNcDbjLSjknQN65d4b53BSp8Cg1a7GzU45U3B6DdU3Wf6V4A89tWebn5XZJSxLU6uLQn</p>
+                <button class="submit-btn" id="copy-xmr-btn" style="padding: 0.5rem 1rem; font-size: 0.8rem; margin-top: 1rem; width: auto; min-width: 150px;">Copy Address</button>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Thank you for supporting the privacy revolution!</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modals = {
+        tos: document.getElementById('tos-modal'),
+        privacy: document.getElementById('privacy-modal'),
+        faq: document.getElementById('faq-modal'),
+        donation: document.getElementById('donation-modal')
+    };
+
+    const links = {
+        tos: document.getElementById('tos-link'),
+        privacy: document.getElementById('privacy-link'),
+        faq: document.getElementById('faq-link'),
+        donation: document.getElementById('donation-link')
+    };
+
+    function openModal(m) { if(m) m.style.display = 'flex'; }
+    function closeModal(m) { if(m) m.style.display = 'none'; }
+
+    Object.keys(links).forEach(key => {
+        links[key]?.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(modals[key]);
+        });
+    });
+
+    document.querySelectorAll('.modal-close').forEach(btn => {
+        btn.addEventListener('click', () => {
+            Object.values(modals).forEach(closeModal);
+        });
+    });
+
+    window.addEventListener('click', (e) => {
+        Object.values(modals).forEach(m => {
+            if (e.target === m) closeModal(m);
+        });
+    });
+
+    document.getElementById('copy-xmr-btn')?.addEventListener('click', () => {
+        const addr = document.getElementById('xmr-address')?.textContent;
+        if (addr) {
+            navigator.clipboard.writeText(addr);
+            const btn = document.getElementById('copy-xmr-btn');
+            if (btn) {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy Address', 2000);
+            }
+        }
+    });
+
+    // Hash handling
+    const checkHash = () => {
+        if (window.location.hash === '#terms') openModal(modals.tos);
+        if (window.location.hash === '#privacy') openModal(modals.privacy);
+        if (window.location.hash === '#faq') openModal(modals.faq);
+        if (window.location.hash === '#donate') openModal(modals.donation);
+    };
+    window.addEventListener('hashchange', checkHash);
+    checkHash();
+</script>

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import SwapWidget from '../components/SwapWidget.astro';
+import Modals from '../components/Modals.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+	title="MoneroSwap — Anonymous Crypto Exchange | No KYC"
+	description="Swap Bitcoin, Ethereum and more to Monero instantly. No KYC, no logs, no tracking. Privacy by default."
+>
+	<Header />
+	<main>
+		<Hero />
+		<SwapWidget />
+	</main>
+	<Footer />
+	<Modals />
+</Layout>
+
+<style>
+	main {
+		min-height: 80vh;
+	}
+</style>
