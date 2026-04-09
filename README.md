@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/richardvzla888/moneroswap.cloud/main/logo_moneroswap_final.png" alt="MoneroSwap Logo" width="250">
+  <img src="https://raw.githubusercontent.com/moneroswapcloud-debug/moneroswap.cloud/main/logo_moneroswap_final.png" alt="MoneroSwap Logo" width="250">
 </p>
 
 <h1 align="center">MoneroSwap.cloud</h1>
