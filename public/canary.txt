@@ -1,0 +1,27 @@
+MONEROSWAP.CLOUD - WARRANT CANARY
+================================
+
+Current Status: ACTIVE
+Last Updated: April 9, 2026
+Next Update Scheduled: July 2026
+
+STATEMENT:
+----------
+As of the date above, MoneroSwap.cloud (and its operators) has NOT received any:
+- National Security Letters (NSLs)
+- Gag orders
+- Court orders for user data
+- Subpoenas for user transaction history
+- Warrants or seizures of infrastructure
+
+MoneroSwap.cloud is designed as a privacy-preserving non-custodial interface. We do not store user logs, IP addresses, or personal data. We are committed to transparency and financial sovereignty.
+
+VERIFICATION:
+-------------
+If this file is not updated by the next scheduled update date, or if this statement is removed, you should assume that we have received a legal request that we are prohibited from disclosing.
+
+--------------------------------------------------------------------------------
+"Arguing that you don't care about the right to privacy because you have 
+nothing to hide is no different than saying you don't care about free speech 
+because you have nothing to say." - Edward Snowden
+--------------------------------------------------------------------------------
