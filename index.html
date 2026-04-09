@@ -88,7 +88,7 @@
             object-fit: contain;
         }
 
-        .onion-badge, .github-badge {
+        .onion-badge, .github-badge, .matrix-badge, .faq-badge, .donation-badge {
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -102,13 +102,24 @@
             color: var(--primary);
             text-decoration: none;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .onion-badge:hover, .github-badge:hover {
+        .onion-badge:hover, .github-badge:hover, .matrix-badge:hover, .faq-badge:hover, .donation-badge:hover {
             background: rgba(255, 102, 0, 0.1);
+            transform: translateY(-2px);
         }
 
-        .onion-badge svg, .github-badge svg {
+        .donation-badge {
+            border-color: #ff3366;
+            color: #ff3366;
+        }
+
+        .donation-badge:hover {
+            background: rgba(255, 51, 102, 0.1);
+        }
+
+        .onion-badge svg, .github-badge svg, .matrix-badge svg, .faq-badge svg, .donation-badge svg {
             width: 16px;
             height: 16px;
         }
@@ -750,7 +761,27 @@
             <a href="/" class="logo">
                 <img src="/logo_moneroswap_final.png" alt="Logo" class="logo-icon">
             </a>
-            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; justify-content: flex-end;">
+                <a href="javascript:void(0)" class="faq-badge" id="faq-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    FAQ
+                </a>
+                <a href="javascript:void(0)" class="donation-badge" id="donation-link">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    Donations
+                </a>
+                <a href="https://matrix.to/#/#moneroswap.cloud:matrix.org" target="_blank" class="matrix-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M.632.402h1.49v2.106C3.55.933 5.903 0 8.01 0c2.193 0 3.841.895 4.84 2.193C13.85.895 15.498 0 17.69 0c2.107 0 4.46.933 5.888 2.508V.402h1.49v23.196h-1.49V21.49c-1.428 1.575-3.781 2.508-5.888 2.508-2.193 0-3.841-.894-4.84-2.192-1.002 1.298-2.65 2.192-4.84 2.192-2.107 0-4.46-.933-5.888-2.508V23.598h-1.49V.402zM16.5 4.6c-2.3 0-3.8 1.4-3.8 3.8v7.2c0 2.4 1.5 3.8 3.8 3.8s3.8-1.4 3.8-3.8v-7.2c0-2.4-1.5-3.8-3.8-3.8zM7.5 4.6c-2.3 0-3.8 1.4-3.8 3.8v7.2c0 2.4 1.5 3.8 3.8 3.8s3.8-1.4 3.8-3.8v-7.2c0-2.4-1.5-3.8-3.8-3.8z"/>
+                    </svg>
+                    Matrix
+                </a>
                 <a href="https://github.com/richardvzla888/moneroswap.cloud" target="_blank" rel="noopener" class="github-badge">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.379.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
@@ -762,7 +793,7 @@
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
                         <path d="M12 6v12M8 9h8M8 15h8"/>
                     </svg>
-                    Onion Version
+                    Onion
                 </a>
             </div>
         </header>
@@ -972,6 +1003,52 @@
                 
                 <h4>5. Data Sharing</h4>
                 <p>Since we do not collect personal data, we have nothing to sell or share with third parties, advertisers, or government agencies.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div id="faq-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <h3 class="modal-title">Frequently Asked Questions</h3>
+            </div>
+            <div class="modal-body">
+                <h4>What is MoneroSwap?</h4>
+                <p>MoneroSwap is a non-custodial, privacy-focused cryptocurrency exchange. We allow users to swap Bitcoin, Monero, Ethereum, and many other assets instantly without account registration or KYC.</p>
+                
+                <h4>Is it really anonymous?</h4>
+                <p>Yes. We do not collect any personal data, IP logs, or require registration. Our service is designed from the ground up to respect user sovereignty and privacy.</p>
+                
+                <h4>How long does a swap take?</h4>
+                <p>Most transactions are completed within 10-30 minutes. The time depends on the network confirmation speed of the asset you are sending and the current load of the liquidity provider.</p>
+                
+                <h4>What are the fees?</h4>
+                <p>We offer competitive rates with no hidden fees. The amount you see in "You Receive" is the estimated outcome, including all exchange fees. Only the standard network (miner) fee of the destination asset is subtracted.</p>
+                
+                <h4>How do I track my transaction?</h4>
+                <p>After initiating a swap, you will stay on a dynamic tracking page with a unique Transaction ID. You can also bookmark the URL or save the ID to check progress later via our tracking view.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donation-modal" class="modal-overlay">
+        <div class="modal-content" style="text-align: center;">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <h3 class="modal-title">Support MoneroSwap</h3>
+            </div>
+            <div class="modal-body">
+                <p>MoneroSwap is an independent project dedicated to financial privacy. Your donations help us maintain infrastructure, pay for server costs, and continue development of anonymous tools.</p>
+                
+                <h4 style="color: #ff3366;">Donate Monero (XMR)</h4>
+                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 1rem; border: 1px solid var(--glass-border); margin: 1.5rem 0; word-break: break-all;">
+                    <p id="xmr-address" style="font-family: monospace; font-size: 0.85rem; color: var(--text);">463tWEBn5XZJSxLU6uLQnQ2iY9xuNcDbjLSjknQN65d4b53BSp8Cg1a7GzU45U3B6DdU3Wf6V4A89tWebn5XZJSxLU6uLQn</p>
+                    <button class="submit-btn" id="copy-xmr-btn" style="padding: 0.5rem 1rem; font-size: 0.8rem; margin-top: 1rem; width: auto; min-width: 150px;">Copy Address</button>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-muted);">Thank you for supporting the privacy revolution!</p>
             </div>
         </div>
     </div>
@@ -1400,35 +1477,65 @@
 
 
         // Modal Logic
-        const tosModal     = document.getElementById('tos-modal');
-        const privacyModal = document.getElementById('privacy-modal');
-        const tosLink      = document.getElementById('tos-link');
-        const privacyLink  = document.getElementById('privacy-link');
-        const closeBtns    = document.querySelectorAll('.modal-close');
+        const tosModal      = document.getElementById('tos-modal');
+        const privacyModal  = document.getElementById('privacy-modal');
+        const faqModal      = document.getElementById('faq-modal');
+        const donationModal = document.getElementById('donation-modal');
+
+        const tosLink       = document.getElementById('tos-link');
+        const privacyLink   = document.getElementById('privacy-link');
+        const faqLink       = document.getElementById('faq-link');
+        const donationLink  = document.getElementById('donation-link');
+        const copyXmrBtn    = document.getElementById('copy-xmr-btn');
+        
+        const closeBtns     = document.querySelectorAll('.modal-close');
 
         function openModal(modal)  { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
         function closeModal(modal) { 
             modal.style.display = 'none'; 
             document.body.style.overflow = 'auto'; 
-            if (window.location.hash === '#terms' || window.location.hash === '#privacy') {
+            if (window.location.hash) {
                 history.replaceState(null, null, ' ');
             }
         }
 
         tosLink.addEventListener('click', (e) => { e.preventDefault(); openModal(tosModal); });
         privacyLink.addEventListener('click', (e) => { e.preventDefault(); openModal(privacyModal); });
+        faqLink.addEventListener('click', (e) => { e.preventDefault(); openModal(faqModal); });
+        donationLink.addEventListener('click', (e) => { e.preventDefault(); openModal(donationModal); });
+
+        if (copyXmrBtn) {
+            copyXmrBtn.addEventListener('click', () => {
+                const addr = document.getElementById('xmr-address').textContent;
+                navigator.clipboard.writeText(addr).then(() => {
+                    copyXmrBtn.textContent = 'Copied!';
+                    setTimeout(() => copyXmrBtn.textContent = 'Copy Address', 2000);
+                });
+            });
+        }
+
         closeBtns.forEach(function(btn) {
-            btn.addEventListener('click', function() { closeModal(tosModal); closeModal(privacyModal); });
+            btn.addEventListener('click', function() { 
+                closeModal(tosModal); 
+                closeModal(privacyModal); 
+                closeModal(faqModal);
+                closeModal(donationModal);
+            });
         });
+
         window.addEventListener('click', function(e) {
-            if (e.target === tosModal)     closeModal(tosModal);
-            if (e.target === privacyModal) closeModal(privacyModal);
+            if (e.target === tosModal)      closeModal(tosModal);
+            if (e.target === privacyModal)  closeModal(privacyModal);
+            if (e.target === faqModal)      closeModal(faqModal);
+            if (e.target === donationModal) closeModal(donationModal);
         });
         
         // Handle URL hashes on load
         function checkHash() {
             if (window.location.hash === '#terms') openModal(tosModal);
             if (window.location.hash === '#privacy') openModal(privacyModal);
+            if (window.location.hash === '#faq') openModal(faqModal);
+            if (window.location.hash === '#donate') openModal(donationModal);
         }
         window.addEventListener('hashchange', checkHash);
 
