@@ -183,8 +183,8 @@
     const minAmountWarning = document.getElementById('min-amount-warning');
     const minAmountValue   = document.getElementById('min-amount-value');
 
-    let currentMinAmount= 0;
     let fetchAbortController = null;
+    let debounceTimer = null;
     let trackingInterval = null;
 
     function updateSymbols() {
@@ -386,8 +386,8 @@
     });
 
     fromAmount.addEventListener('input', () => {
-        clearTimeout(fetchAbortController?.timer);
-        fetchAbortController = { timer: setTimeout(() => fetchExchangeRate(), 600) };
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => fetchExchangeRate(), 600);
     });
 
     document.getElementById('new-swap-btn').addEventListener('click', () => location.reload());
