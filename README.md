@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/moneroswapcloud-debug/moneroswap.cloud/main/logo_moneroswap_final.png" alt="MoneroSwap Logo" width="250">
+  <img src="https://raw.githubusercontent.com/moneroswapcloud-debug/moneroswap.cloud/main/public/logo_moneroswap_final.png" alt="MoneroSwap Logo" width="250">
 </p>
 
 <h1 align="center">MoneroSwap.cloud</h1>
@@ -28,11 +28,9 @@ MoneroSwap is a privacy-first, single-page application (SPA) that facilitates in
 - 🧅 **Tor Native**: Full support for Tor Hidden Services via a dedicated `.onion` address.
 - 💬 **Community Centric**: Integrated Matrix support for anonymous communication.
 
-## 🌐 Community & Support
-
 - **Matrix Space**: [Join our Matrix Channel](https://matrix.to/#/#moneroswap.cloud:matrix.org)
 - **Tor Hidden Service**: `http://hhnaholwijsz5puw3gzvrhipzmcpiyinmjw725rqymq7sfj7pfyetryd.onion`
-- **GitHub**: [richardvzla888/moneroswap.cloud](https://github.com/richardvzla888/moneroswap.cloud)
+- **GitHub**: [moneroswapcloud-debug/moneroswap.cloud](https://github.com/moneroswapcloud-debug/moneroswap.cloud)
 
 ## 🛠️ Technical Overview
 
@@ -51,19 +49,20 @@ To deploy your own instance of MoneroSwap:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/richardvzla888/moneroswap.cloud.git
+   git clone https://github.com/moneroswapcloud-debug/moneroswap.cloud.git
    ```
 
-2. **Configure the Proxy**:
-   Update `changenow-proxy.js` with your affiliate API key.
+2. **Configure Environment**:
+   Create a `.env` file with `PUBLIC_CHANGENOW_API_KEY`, `PUBLIC_CHANGENOW_REF_CODE`, and `PUBLIC_PROXY_URL`.
 
-3. **Run with PM2**:
+3. **Build the Project**:
    ```bash
-   pm2 start changenow-proxy.js --name moneroswap-proxy
+   npm install
+   npm run build
    ```
 
-4. **Serve are Static Files**:
-   Point your web server (Apache/Nginx) to `index.html`.
+4. **Serve with Apache/Nginx**:
+   Point your web server's `DocumentRoot` to the `dist/` directory.
 
 ## 📄 License
 
