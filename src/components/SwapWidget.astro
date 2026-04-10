@@ -104,6 +104,25 @@
 
 <div class="tracking-widget" id="tracking-widget" style="display: none;">
     <h2 class="tracking-title">Transaction Tracking</h2>
+    
+    <div class="progress-container">
+        <div class="progress-steps">
+            <div class="progress-step active" id="step-1">
+                <div class="step-icon">1</div>
+                <span>Deposit</span>
+            </div>
+            <div class="progress-line" id="line-1"></div>
+            <div class="progress-step" id="step-2">
+                <div class="step-icon">2</div>
+                <span>Exchange</span>
+            </div>
+            <div class="progress-line" id="line-2"></div>
+            <div class="progress-step" id="step-3">
+                <div class="step-icon">3</div>
+            </div>
+            <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; position: absolute; bottom: -20px; right: -10px;">Complete</span>
+        </div>
+    </div>
     <div class="tracking-row">
         <span class="tracking-label">Transaction ID:</span>
         <span class="tracking-value" id="track-id" style="font-family: monospace;">...</span>
@@ -361,6 +380,34 @@
                 const status = data.status || 'waiting';
                 statusSpan.textContent = status.toUpperCase();
                 statusSpan.className = `status-badge status-${status.toLowerCase()}`;
+                
+                // Update Progress Bar
+                const s1 = document.getElementById('step-1');
+                const s2 = document.getElementById('step-2');
+                const s3 = document.getElementById('step-3');
+                const l1 = document.getElementById('line-1');
+                const l2 = document.getElementById('line-2');
+
+                if (['waiting', 'new', 'confirming'].includes(status)) {
+                    s1.className = 'progress-step active';
+                    s2.className = 'progress-step';
+                    s3.className = 'progress-step';
+                    l1.className = 'progress-line';
+                    l2.className = 'progress-line';
+                } else if (['exchanging'].includes(status)) {
+                    s1.className = 'progress-step completed';
+                    s2.className = 'progress-step active';
+                    s3.className = 'progress-step';
+                    l1.className = 'progress-line completed';
+                    l2.className = 'progress-line';
+                } else if (['sending', 'finished'].includes(status)) {
+                    s1.className = 'progress-step completed';
+                    s2.className = 'progress-step completed';
+                    s3.className = 'progress-step completed';
+                    l1.className = 'progress-line completed';
+                    l2.className = 'progress-line completed';
+                }
+
                 if (['finished', 'failed', 'refunded'].includes(status)) clearInterval(trackingInterval);
             }
         } catch (e) {}
@@ -505,4 +552,18 @@
     .status-confirming, .status-exchanging { background: rgba(255, 170, 0, 0.2); color: #ffaa00; }
     .status-finished { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
     .status-failed, .status-refunded { background: rgba(255, 68, 68, 0.2); color: #ff4444; }
+
+    /* Progress Stepper */
+    .progress-container { margin-bottom: 3rem; padding: 0 0.5rem; }
+    .progress-steps { display: flex; justify-content: space-between; align-items: center; position: relative; }
+    .progress-step { display: flex; flex-direction: column; align-items: center; z-index: 1; position: relative; }
+    .step-icon { width: 32px; height: 32px; background: #1a1a1a; border: 2px solid #2e2e2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem; transition: all 0.3s ease; }
+    .progress-step span { font-size: 0.75rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.3s ease; position: absolute; bottom: -24px; white-space: nowrap; }
+    .progress-line { flex: 1; height: 2px; background: #2e2e2e; margin-bottom: 0px; transition: all 0.3s ease; position: relative; top: -16px; margin: 0 10px; }
+    
+    .progress-step.active .step-icon { border-color: var(--primary); color: var(--text); background: rgba(242, 169, 0, 0.1); box-shadow: 0 0 15px rgba(242, 169, 0, 0.2); }
+    .progress-step.active span { color: var(--primary); }
+    .progress-step.completed .step-icon { background: var(--primary); border-color: var(--primary); color: white; }
+    .progress-step.completed span { color: var(--primary); }
+    .progress-line.completed { background: var(--primary); }
 </style>
