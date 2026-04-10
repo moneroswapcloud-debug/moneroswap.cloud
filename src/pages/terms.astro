@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+    title="Terms of Service — MoneroSwap"
+    description="Read the Terms of Service for MoneroSwap. Privacy absolute, No-KYC exchange."
+>
+    <Header />
+    <main class="terms-page">
+        <div class="content-card">
+            <a href="/" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Swap
+            </a>
+            
+            <h1 class="page-title">Terms of Service</h1>
+            <p class="last-updated">Last Updated: April 2026</p>
+
+            <div class="terms-content">
+                <p>Welcome to MoneroSwap. By using our service, you agree to the following terms:</p>
+                
+                <section>
+                    <h2>1. Nature of Service</h2>
+                    <p>MoneroSwap is a non-custodial cryptocurrency exchange platform. We do not hold your funds; we facilitate the exchange between different digital assets through specialized infrastructure.</p>
+                </section>
+                
+                <section>
+                    <h2>2. No-KYC Guarantee (Level 0)</h2>
+                    <p><strong>Universal Privacy Commitment:</strong> MoneroSwap will <u>NEVER</u> request Know Your Customer (KYC) documentation, identity verification, or personal information from its users. Our service is designed to be purely transactional and identity-free.</p>
+                </section>
+
+                <section>
+                    <h2>3. User Responsibility</h2>
+                    <p>You are solely responsible for providing the correct wallet addresses. Transactions on the blockchain are irreversible, and we cannot recover funds sent to the wrong address.</p>
+                </section>
+                
+                <section>
+                    <h2>4. Risk Acknowledgment</h2>
+                    <p>Digital assets are highly volatile. By using this service, you acknowledge and accept the market risks and the potential for financial loss.</p>
+                </section>
+                
+                <section>
+                    <h2>5. Lawful Use</h2>
+                    <p>You agree not to use MoneroSwap for any illegal activities. Users are responsible for complying with their local regulations.</p>
+                </section>
+
+                <div class="raw-link">
+                    <p>Need a raw version? <a href="/terms.txt" target="_blank">View terms.txt</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    .terms-page {
+        padding: 4rem 1.5rem;
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+    }
+
+    .content-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(24px);
+        border: 1px solid var(--glass-border);
+        border-radius: 1.5rem;
+        padding: 3rem;
+        max-width: 800px;
+        width: 100%;
+        box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        transition: transform 0.2s ease;
+    }
+
+    .back-link:hover {
+        transform: translateX(-5px);
+    }
+
+    .page-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+    }
+
+    .last-updated {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        margin-bottom: 3rem;
+    }
+
+    .terms-content {
+        color: var(--text-muted);
+        line-height: 1.8;
+    }
+
+    .terms-content section {
+        margin-bottom: 2.5rem;
+    }
+
+    .terms-content h2 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .terms-content strong {
+        color: var(--text);
+    }
+
+    .raw-link {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--glass-border);
+        text-align: center;
+        font-size: 0.875rem;
+    }
+
+    .raw-link a {
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .raw-link a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+        .content-card {
+            padding: 2rem 1.5rem;
+        }
+        .page-title {
+            font-size: 2rem;
+        }
+    }
+</style>

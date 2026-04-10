@@ -1,0 +1,22 @@
+MONEROSWAP TERMS OF SERVICE
+Last Updated: April 2026
+
+Welcome to MoneroSwap. By using our service, you agree to the following terms:
+
+1. NATURE OF SERVICE
+MoneroSwap is a non-custodial cryptocurrency exchange platform. We do not hold your funds; we facilitate the exchange between different digital assets through specialized infrastructure.
+
+2. NO-KYC GUARANTEE (LEVEL 0)
+Universal Privacy Commitment: MoneroSwap will NEVER request Know Your Customer (KYC) documentation, identity verification, or personal information from its users. Our service is designed to be purely transactional and identity-free.
+
+3. USER RESPONSIBILITY
+You are solely responsible for providing the correct wallet addresses. Transactions on the blockchain are irreversible, and we cannot recover funds sent to the wrong address.
+
+4. RISK ACKNOWLEDGMENT
+Digital assets are highly volatile. By using this service, you acknowledge and accept the market risks and the potential for financial loss.
+
+5. LAWFUL USE
+You agree not to use MoneroSwap for any illegal activities. Users are responsible for complying with their local regulations.
+
+---
+MoneroSwap.cloud - Privacy Absolute.

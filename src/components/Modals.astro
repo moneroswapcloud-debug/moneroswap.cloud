@@ -1,32 +1,6 @@
 ---
 ---
 <!-- Modals -->
-<div id="tos-modal" class="modal-overlay">
-    <div class="modal-content">
-        <button class="modal-close">&times;</button>
-        <div class="modal-header">
-            <h3 class="modal-title">Terms of Service</h3>
-        </div>
-        <div class="modal-body">
-            <p>Welcome to MoneroSwap. By using our service, you agree to the following terms:</p>
-            
-            <h4>1. Nature of Service</h4>
-            <p>MoneroSwap is a non-custodial cryptocurrency exchange platform. We do not hold your funds; we facilitate the exchange between different digital assets through specialized infrastructure.</p>
-            
-            <h4>2. No-KYC Guarantee (Level 0)</h4>
-            <p><strong>Universal Privacy Commitment:</strong> MoneroSwap will <u>NEVER</u> request Know Your Customer (KYC) documentation, identity verification, or personal information from its users. Our service is designed to be purely transaccional and identity-free.</p>
-
-            <h4>3. User Responsibility</h4>
-            <p>You are solely responsible for providing the correct wallet addresses. Transactions on the blockchain are irreversible, and we cannot recover funds sent to the wrong address.</p>
-            
-            <h4>4. Risk Acknowledgment</h4>
-            <p>Digital assets are highly volatile. By using this service, you acknowledge and accept the market risks and the potential for financial loss.</p>
-            
-            <h4>5. Lawful Use</h4>
-            <p>You agree not to use MoneroSwap for any illegal activities. Users are responsible for complying with their local regulations.</p>
-        </div>
-    </div>
-</div>
 
 <div id="privacy-modal" class="modal-overlay">
     <div class="modal-content">
@@ -98,14 +72,12 @@
 
 <script>
     const modals = {
-        tos: document.getElementById('tos-modal'),
         privacy: document.getElementById('privacy-modal'),
         faq: document.getElementById('faq-modal'),
         donation: document.getElementById('donation-modal')
     };
 
     const links = {
-        tos: document.getElementById('tos-link'),
         privacy: document.getElementById('privacy-link'),
         faq: document.getElementById('faq-link'),
         donation: document.getElementById('donation-link')
@@ -147,7 +119,6 @@
 
     // Hash handling
     const checkHash = () => {
-        if (window.location.hash === '#terms') openModal(modals.tos);
         if (window.location.hash === '#privacy') openModal(modals.privacy);
         if (window.location.hash === '#faq') openModal(modals.faq);
         if (window.location.hash === '#donate') openModal(modals.donation);
