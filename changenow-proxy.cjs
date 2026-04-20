@@ -30,27 +30,69 @@ http.createServer((req, res) => {
   }
 
   const options = new URL(target);
-  const reqOptions = {
-    hostname: options.hostname,
-    path: options.pathname + options.search,
-    method: req.method,
-    headers: { 
-      'Content-Type': 'application/json',
-      'x-changenow-api-key': '353e12df6ccc210ab17c8cc917aad2aa47b84cd76e764c8dd27944dfb150f60d',
-      'x-changenow-apikey': '353e12df6ccc210ab17c8cc917aad2aa47b84cd76e764c8dd27944dfb150f60d'
+  const reqHeaders = { 
+    'Content-Type': 'application/json',
+    'x-changenow-api-key': process.env.CHANGENOW_API_KEY,
+    'x-changenow-apikey': process.env.CHANGENOW_API_KEY
+  };
+
+  const startProxy = (method, path, headers, body = null) => {
+    const reqOptions = {
+      hostname: options.hostname,
+      path: path,
+      method: method,
+      headers: headers
+    };
+
+    const proxy = https.request(reqOptions, (apiRes) => {
+      res.writeHead(apiRes.statusCode, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
+      apiRes.pipe(res);
+    });
+
+    proxy.on('error', (err) => {
+      console.error(`[ERROR] Proxy a ${target}: ${err.message}`);
+      if (!res.headersSent) {
+        res.writeHead(502);
+        res.end('Bad Gateway');
+      }
+    });
+
+    if (body !== null) {
+      proxy.write(body);
+      proxy.end();
+    } else if (req.method === 'POST') {
+      req.pipe(proxy);
+    } else {
+      proxy.end();
     }
   };
 
-  const proxy = https.request(reqOptions, (apiRes) => {
-    res.writeHead(apiRes.statusCode, {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
+  req.on('error', (err) => console.error(`[ERROR] Petición cliente: ${err.message}`));
+
+  if (req.method === 'POST' && options.pathname && options.pathname.includes('/v2/exchange')) {
+    let bodyData = '';
+    req.on('data', chunk => { bodyData += chunk; });
+    req.on('end', () => {
+      let finalBody = bodyData;
+      let injected = false;
+      try {
+        const parsed = JSON.parse(bodyData);
+        parsed.ref_id = 'acd06cc';
+        finalBody = JSON.stringify(parsed);
+        injected = true;
+      } catch (e) {
+        console.error(`[ERROR] Error parsing JSON: ${e.message}`);
+      }
+      
+      reqHeaders['Content-Length'] = Buffer.byteLength(finalBody);
+      console.log(`[${new Date().toISOString()}] POST ${target} - ref_id inyectado: ${injected}`);
+      startProxy('POST', options.pathname + options.search, reqHeaders, finalBody);
     });
-    apiRes.pipe(res);
-  });
-
-  if (req.method === 'POST') req.pipe(proxy);
-  else proxy.end();
-
-  proxy.on('error', () => { res.writeHead(502); res.end('Bad Gateway'); });
+  } else {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${target}`);
+    startProxy(req.method, options.pathname + options.search, reqHeaders);
+  }
 }).listen(PORT, '127.0.0.1', () => console.log(`Proxy running on port ${PORT}`));
